@@ -52,8 +52,9 @@ namespace RecommendationApp
             }
         }
 
-        public Film(string title, string genre, string director)
+        public Film(int itemId, string title, string genre, string director)
         {
+            this.itemID = itemId;
             Title = title;
             Genre = genre;
             Director = director;

@@ -52,8 +52,9 @@ namespace RecommendationApp
             }
         }
 
-        public Book(string title, string genre, string author)
+        public Book(int itemId, string title, string genre, string author)
         {
+            this.itemID = itemId;
             Title = title;
             Genre = genre;
             Author = author;
