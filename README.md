@@ -4,9 +4,21 @@ A Windows Forms app in C# that recommends films and books from what you have
 already rated. Built as a university project; later revisited to fix the security
 problems the original version had.
 
-> **Status:** builds clean (0 errors, 0 warnings) and the password hashing is covered by tests. The interesting part of this
-> repository is not the recommendation logic — it is the [security review](#security-review)
-> below, and what changed because of it.
+> **Status:** builds clean (0 errors, 0 warnings) and the password hashing is covered
+> by tests.
+
+## What I built
+
+- **A working two-tier app** — Windows Forms UI over SQL Server, with accounts,
+  a catalogue, 1–5 ratings and genre-based suggestions.
+- **An object model worth showing** — `ItemBase` abstract, `Item` implementing it,
+  `Book` and `Film` extending it, and `User` validating through property setters
+  rather than exposing public fields.
+- **A security pass a year later** — I reopened this project, found that passwords
+  were stored in plain text and that the build was broken, and fixed both. The
+  [security review](#security-review) below documents what was wrong and why.
+
+`C#` · `.NET Framework 4.7.2` · `Windows Forms` · `ADO.NET` · `SQL Server` · `PBKDF2`
 
 ## What it does
 
