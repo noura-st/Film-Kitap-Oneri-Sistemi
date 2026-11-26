@@ -127,10 +127,8 @@ cases that matter: a wrong password is rejected, two hashes of the same password
 differ (so the salt works), a plain-text string is not accepted as a hash, and
 malformed or truncated hash strings fail closed instead of throwing.
 
-```bash
-cd tests
-dotnet run
-```
+It needs only the .NET SDK — no database, no Windows Forms, because `PasswordHasher`
+has neither as a dependency. Output from my run:
 
 ```
   PASS  correct password verifies
@@ -160,46 +158,18 @@ Being explicit about this is more useful than pretending it is done:
   hurt query-plan reuse because it infers the type and size — `Add("@p",
   SqlDbType.NVarChar, 50).Value = ...` is the more precise form.
 
-## How to run
+## Environment
 
-Requires Visual Studio 2019+ (or MSBuild) with .NET Framework 4.7.2 and a local
-SQL Server Express instance.
+- **.NET Framework 4.7.2** · Visual Studio 2019+ or MSBuild
+- **SQL Server Express** (a local `localhost\SQLEXPRESS` instance)
+- **ADO.NET** via `System.Data.SqlClient`; the connection string lives in `App.config`
 
-**1. Create the database**
+The schema is in `SQLQuery1.sql` — it is idempotent, and it carries the constraints
+the code relies on: the unique email index, the `Score BETWEEN 1 AND 5` check, and
+`UNIQUE (UserID, ItemID)` on ratings, which is what makes the MERGE upsert safe.
 
-Open `SQLQuery1.sql` in SSMS or Azure Data Studio against your `localhost\SQLEXPRESS`
-instance and run it. It creates `RecommendationDB`'s tables, constraints and seed
-items (5 films and books). It is idempotent — running it twice drops and recreates.
-
-```sql
-CREATE DATABASE RecommendationDB;   -- once, if it does not exist
-```
-
-Then run `SQLQuery1.sql` **inside** that database.
-
-**2. Point the app at your server**
-
-Edit `App.config` if your instance is not `localhost\SQLEXPRESS`:
-
-```xml
-<add name="RecommendationDB"
-     connectionString="Server=YOUR_SERVER;Database=RecommendationDB;Trusted_Connection=True;"
-     providerName="System.Data.SqlClient" />
-```
-
-**3. Build and run**
-
-```bash
-git clone https://github.com/noura-st/Film-Kitap-Oneri-Sistemi.git
-```
-
-Open `RecommendationApp/RecommendationApp.sln` in Visual Studio and press F5.
-
-**4. Try it**
-
-Register an account (8+ characters), rate a few items, then press
-"Önerileri Göster". With no ratings yet you get a friendly message instead of an
-empty list.
+`tests/` holds a standalone runner for `PasswordHasher` that needs only the .NET SDK
+and no database.
 
 ## Licence
 
