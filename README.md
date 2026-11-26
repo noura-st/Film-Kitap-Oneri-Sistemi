@@ -1,11 +1,12 @@
 # Film & Kitap Öneri Sistemi
 
 A Windows Forms app in C# that recommends films and books from what you have
-already rated. Built as a university project; later revisited to fix the security
-problems the original version had.
+already rated. Built as a university project; later revisited end to end.
 
-> **Status:** builds clean (0 errors, 0 warnings) and the password hashing is covered
-> by tests.
+`C#` · `.NET Framework 4.7.2` · `Windows Forms` · `ADO.NET` · `SQL Server` · `PBKDF2-SHA256` · **0 build warnings** · **13 unit tests** · **transactional writes**
+
+> **Status:** builds clean — 0 errors, 0 warnings — and the password hashing is
+> covered by 13 tests.
 
 ## What I built
 
